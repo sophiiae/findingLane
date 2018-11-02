@@ -16,11 +16,13 @@ print('This image is: ', type(img), 'with dimensions: ', img.shape)
 y = img.shape[0]
 x = img.shape[1]
 
+# convert image to grayscale and use Gaussian blur to smooth the edges. 
 gray = cv2.cvtColor(img, cv2.COLOR_RGB2GRAY)
 blur = cv2.GaussianBlur(gray, (3, 3), 0)
 
 edges = cv2.Canny(blur, 60, 120)
 
+# use Hough transform to extract lines
 rho = 1 
 theta = np.pi / 180
 th = 1
@@ -54,10 +56,10 @@ fit_top = np.polyfit((left_top[0], right_top[0]), (left_top[1], right_top[1]), 1
 fit_bottom = np.polyfit((left_bot[0], right_bot[0]), (left_bot[1], right_bot[1]), 1)
 
 X, Y = np.meshgrid(np.arange(0, x), np.arange(0, y))
-region_th = (Y > (X*fit_left[0] + fit_left[1])) & \
-            (Y > (X*fit_right[0] + fit_right[1])) & \
-            (Y < (X*fit_bottom[0] + fit_bottom[1])) & \
-            (Y > (X*fit_top[0]) + fit_top[1])
+region_th = (Y > (X * fit_left[0] + fit_left[1])) & \
+            (Y > (X * fit_right[0] + fit_right[1])) & \
+            (Y < (X * fit_bottom[0] + fit_bottom[1])) & \
+            (Y > (X * fit_top[0]) + fit_top[1])
 regionCopy[region_th] = [0, 255, 0]
 
 # combine the extracted line and region of interest to specify the lane 
@@ -66,7 +68,7 @@ color_th = (lineImg[:,:,0] > 250) & (lineImg[:,:,1] < 10) & (lineImg[:,:,2] < 10
 
 colorLines[color_th & region_th] = [255, 0, 0]
 
-#plot both original image and line extracted images
+# plot both original image and line extracted images
 fig = plt.figure(figsize=(12, 6))
 
 plt.subplot(231)
@@ -88,4 +90,5 @@ plt.title("Extract lines")
 plt.subplot(236)
 plt.imshow(colorLines)
 plt.title("Line segments in ROI")
+
 plt.show()
