@@ -1,0 +1,13 @@
+plt.subplot(231)
+# plt.imshow(img)
+# plt.subplot(232)
+# plt.imshow(gray, cmap='gray')
+# plt.subplot(233)
+# plt.imshow(edges, cmap='Greys_r')
+
+# plt.subplot(234)
+# plt.imshow(regionCopy)
+# plt.subplot(235)
+# plt.imshow(lineImg)
+# plt.subplot(236)
+# plt.imshow(colorLines)
