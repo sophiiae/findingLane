@@ -43,18 +43,19 @@ print("Hough output shape: ", lines.shape)
 lineCopy = np.copy(img)
 lineImg = np.zeros((y, x, 3), dtype=np.uint8)
 
-laneLeft = []
-laneRight = []
+# store x, y pixel coordinates for left lane and right lane
+laneLeft = [[],[]]     
+laneRight = [[],[]]
 
 for line in lines:
     for x1, y1, x2, y2 in line: 
         slope = (y2 - y1) / (x2 - x1)
         if slope < 0: 
-            laneRight.extend([(x1, y1)])
-            laneRight.extend([(x2, y2)])
+            laneRight[0].extend([(x1, x2)])
+            laneRight[1].extend([(y1, y2)])
         elif slope > 0:
-            laneLeft.extend([(x1, y1)])
-            laneLeft.extend([(x2, y2)])
+            laneLeft[0].extend([(x1, x2)])
+            laneLeft[1].extend([(y2, y2)])
         cv2.line(lineImg, (x1, y1), (x2, y2), (255, 0, 0), 4)
         
 combo = cv2.addWeighted(lineCopy, 0.8, lineImg, 1, 0)
