@@ -75,7 +75,6 @@ def draw_lines(img, lines, color=[255, 0, 0], thickness=2):
 def hough_lines(img, rho, theta, threshold, min_line_len, max_line_gap):
     """
     `img` should be the output of a Canny transform.
-        
     Returns an image with hough lines drawn.
     """
     lines = cv2.HoughLinesP(img, rho, theta, threshold, np.array([]), minLineLength=min_line_len, maxLineGap=max_line_gap)
@@ -88,9 +87,7 @@ def weighted_img(img, initial_img, α=0.8, β=1., γ=0.):
     """
     `img` is the output of the hough_lines(), An image with lines drawn on it.
     Should be a blank image (all black) with lines drawn on it.
-    
     `initial_img` should be the image before any processing.
-    
     The result image is computed as follows:
     
     initial_img * α + img * β + γ
